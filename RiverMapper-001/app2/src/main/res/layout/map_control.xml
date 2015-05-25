@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
+    android:padding="@dimen/mon_padding"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:id="@+id/MC_seekLayout"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/MC_radius"
+            android:textColor="@color/green"
+            android:text="10"
+            style="@style/Title1TextStyleGreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <SeekBar
+            android:id="@+id/MC_seekBar"
+            android:layout_toRightOf="@id/MC_radius"
+            android:max="50"
+            android:progress="10"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/MC_top"
+        android:layout_below="@id/MC_seekLayout"
+        android:background="@color/beige_pale"
+        android:padding="@dimen/mon_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/MC_label1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rivers found: "
+            android:layout_centerVertical="true"
+            android:textColor="@color/blue_gray_300"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/MC_rivers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/MC_label1"
+            android:text="0"
+            android:layout_marginLeft="@dimen/mon_padding"
+            android:textColor="@color/blue_800"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/MC_search"
+            android:src="@android:drawable/ic_menu_search"
+            android:tint="@color/pink_500"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/mon_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ProgressBar
+            android:id="@+id/MC_progress"
+            style="@android:style/Widget.ProgressBar.Small.Inverse"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/mon_margin"
+            android:layout_toLeftOf="@id/MC_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/MC_spinner"
+        android:layout_below="@id/MC_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+</RelativeLayout>
