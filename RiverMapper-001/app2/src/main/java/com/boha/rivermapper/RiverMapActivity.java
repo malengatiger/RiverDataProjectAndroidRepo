@@ -78,7 +78,7 @@ public class RiverMapActivity extends AppCompatActivity
 
     SeekBar seekBar;
     TextView txtRadius;
-    ImageView imgSearch;
+    ImageView imgSearch, imgMapType;
     Spinner spinner;
 
     List<Marker> markers = new ArrayList<Marker>();
@@ -96,9 +96,6 @@ public class RiverMapActivity extends AppCompatActivity
     View topLayout;
     Activity activity;
     ProgressBar progressBar;
-    static final Locale loc = Locale.getDefault();
-    static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(LOG, "############### onCreate ........................");
@@ -115,8 +112,6 @@ public class RiverMapActivity extends AppCompatActivity
 
         setFields();
 
-        setTitle("River Finder");
-
         googleMap = mapFragment.getMap();
         if (googleMap == null) {
             finish();
@@ -125,7 +120,7 @@ public class RiverMapActivity extends AppCompatActivity
         setGoogleMap();
         getCachedData();
         Util.setCustomActionBar(ctx,getSupportActionBar(),
-                "River Finder", ctx.getResources().getDrawable(R.mipmap.logo2));
+                "SA River Finder", ctx.getResources().getDrawable(R.mipmap.ic_launcher));
     }
 
 
@@ -137,6 +132,7 @@ public class RiverMapActivity extends AppCompatActivity
         spinner = (Spinner) findViewById(R.id.MC_spinner);
         txtRadius = (TextView) findViewById(R.id.MC_radius);
         imgSearch = (ImageView) findViewById(R.id.MC_search);
+        imgMapType = (ImageView) findViewById(R.id.MC_maptype);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -167,7 +163,37 @@ public class RiverMapActivity extends AppCompatActivity
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getRiversAroundMe();
+                Util.flashOnce(imgSearch, 300, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        getRiversAroundMe();
+                    }
+                });
+            }
+        });
+        imgMapType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Util.flashOnce(imgMapType, 300, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        switch (googleMap.getMapType()) {
+                            case GoogleMap.MAP_TYPE_NORMAL:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                                break;
+                            case GoogleMap.MAP_TYPE_SATELLITE:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                                break;
+                            case GoogleMap.MAP_TYPE_TERRAIN:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                                break;
+                            case GoogleMap.MAP_TYPE_HYBRID:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                                break;
+                        }
+
+                    }
+                });
             }
         });
     }
@@ -175,6 +201,7 @@ public class RiverMapActivity extends AppCompatActivity
     private void setGoogleMap() {
         googleMap.setMyLocationEnabled(true);
         googleMap.setBuildingsEnabled(true);
+        //googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         //TODO - remove after test
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -332,7 +359,7 @@ public class RiverMapActivity extends AppCompatActivity
         List<String> list = new ArrayList<>();
         calculateDistances();
         for (RiverDTO d : response.getRiverList()) {
-            list.add(d.getRiverName());
+            list.add(d.getRiverName().trim() + " - " + getDistance(d.getDistanceFromMe()) + " away");
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(ctx, R.layout.spinner_text, list);
         spinner.setAdapter(adapter);
@@ -413,7 +440,7 @@ public class RiverMapActivity extends AppCompatActivity
         double lat = river.getNearestLatitude();
         double lng = river.getNearestLongitude();
         LatLng latLng = new LatLng(lat, lng);
-        CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(latLng, 12f);
+        CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(latLng, 10f);
         googleMap.animateCamera(cu);
 
         googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
@@ -430,7 +457,7 @@ public class RiverMapActivity extends AppCompatActivity
                 double lat = river.getNearestLatitude();
                 double lng = river.getNearestLongitude();
                 LatLng latLng = new LatLng(lat, lng);
-                CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(latLng, 12f);
+                CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(latLng, 10f);
                 googleMap.animateCamera(cu);
 
             }

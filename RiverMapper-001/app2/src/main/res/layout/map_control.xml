@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/white"
-    android:padding="@dimen/mon_padding"
+    android:padding="@dimen/mon_divider"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
 
     <RelativeLayout
         android:id="@+id/MC_seekLayout"
-        android:layout_marginTop="@dimen/mon_padding"
+        android:layout_marginTop="@dimen/mon_divider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -26,6 +26,16 @@
             android:layout_centerVertical="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/MC_label2"
+            android:text="Radius of Search for South African Rivers (kilometres)"
+            android:layout_below="@id/MC_seekBar"
+            android:textSize="11sp"
+            android:padding="@dimen/mon_padding"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/mon_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 
@@ -33,7 +43,7 @@
         android:id="@+id/MC_top"
         android:layout_below="@id/MC_seekLayout"
         android:background="@color/beige_pale"
-        android:padding="@dimen/mon_margin"
+        android:padding="@dimen/mon_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -44,7 +54,7 @@
             android:text="Rivers found: "
             android:layout_centerVertical="true"
             android:textColor="@color/blue_gray_300"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/MC_rivers"
@@ -54,8 +64,9 @@
             android:text="0"
             android:layout_marginLeft="@dimen/mon_padding"
             android:textColor="@color/blue_800"
-            android:textSize="36sp"
-            android:textStyle="bold" />
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:textStyle="normal" />
         <ImageView
             android:id="@+id/MC_search"
             android:src="@android:drawable/ic_menu_search"
@@ -75,11 +86,27 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
-    <Spinner
-        android:id="@+id/MC_spinner"
+    <RelativeLayout
         android:layout_below="@id/MC_top"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <Spinner
+        android:id="@+id/MC_spinner"
+
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/MC_maptype"
+            android:src="@android:drawable/ic_menu_rotate"
+            android:tint="@color/teal_900"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/mon_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 
 
 
